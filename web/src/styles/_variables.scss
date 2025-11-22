@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+// Azul (principal)
+$blue-primary: #002855;
+$blue-primary-hover: #001a3a;
+$blue-alt: #003b75;
+$blue-alt-hover: #002d5f;
+
+// Estados
+$success: #1fbf75;
+$warning: #f4a100;
+$error: #e63946;
+
+// Neutros claros
+$gray-background: #f5f7fa;
+$gray-surface: #ffffff;
+$gray-border: #d8dee9;
+$gray-border-light: #e3e9f2;
+
+// Neutros escuros
+$dark-background: #0f172a;  
+$dark-surface: #1e293b;      
+$dark-border: #334155;  
+$dark-border-light: #3f4c63;
+   
+
+// Texto claro/escuro
+$light-text: #111827;
+$light-text-light: #6b7280;
+
+$dark-text: #e2e8f0;
+$dark-text-light: #94a3b8;
+
+
+// Tipografia
+$font-family-base: "Inter", sans-serif;
+$font-family-brand: "Bricolage Grotesque", sans-serif;
+
+// Tamanho da Fonte
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 20px;
+$font-size-xl: 28px;
+
+// Espaçamento
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-10: 40px;
+
+// Arredondamento
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-pill: 999px;
+
+// Sombras
+$shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.10);
+$shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.20);
+
+// Tema Claro
+:root {
+  --color-primary: #{$blue-primary};
+  --color-primary-hover: #{$blue-primary-hover};
+  --color-primary-alt: #{$blue-alt};
+  --color-primary-alt-hover: #{$blue-alt-hover};
+
+  --color-success: #{$success};
+  --color-warning: #{$warning};
+  --color-error: #{$error};
+
+  --color-background: #{$gray-background};
+  --color-surface: #{$gray-surface};
+  --color-border: #{$gray-border};
+  --color-border-light: #{$gray-border-light};
+
+  --color-text: #{$light-text};
+  --color-text-light: #{$light-text-light};
+
+  --shadow-soft: #{$shadow-soft};
+  --shadow-medium: #{$shadow-medium};
+  --shadow-strong: #{$shadow-strong};
+}
+
+// Tema Escuro
+[data-theme="dark"] {
+  --color-primary: #{$blue-alt};
+  --color-primary-hover: #{$blue-alt-hover};
+  --color-primary-alt: #{$blue-primary};
+  --color-primary-alt-hover: #{$blue-primary-hover};
+
+  --color-success: #{$success};
+  --color-warning: #{$warning};
+  --color-error: #{$error};
+
+  --color-background: #{$dark-background};
+  --color-surface: #{$dark-surface};
+  --color-border: #{$dark-border};
+  --color-border-light: #{$dark-border-light};
+
+  --color-text: #{$dark-text};
+  --color-text-light: #{$dark-text-light};
+
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.45);
+}

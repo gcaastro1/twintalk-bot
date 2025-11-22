@@ -1,0 +1,37 @@
+@use "../../../styles/variables" as *;
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: $space-4;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  .page-title {
+    flex: 1;
+    text-align: center;
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: var(--color-text-light);
+    transition: 0.2s ease;
+
+    &:hover {
+      color: var(--color-text);
+      transform: scale(1.05);
+    }
+  }
+}

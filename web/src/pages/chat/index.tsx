@@ -1,54 +1,81 @@
-import { useState } from "react";
-import { useUser } from "../../context/UserContext";
-// Types
-import type { IMessage } from "../../types/Message";
-// Styles
+import { useEffect, useRef, useState } from "react";
+import { IoSend } from "react-icons/io5";
+import PageHeader from "../../components/layout/PageHeader";
+import PageLayout from "../../components/layout/PageLayout";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
+import type { IChatMessage } from "../../types/Message";
 import "./styles.scss";
 
+export default function ChatPage() {
+  const [messages, setMessages] = useState<IChatMessage[]>([]);
+  const [input, setInput] = useState("");
 
-export default function Chat() {
-  const { user } = useUser();
-  const [messages, setMessages] = useState<IMessage[]>([]);
-  const [text, setText] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  if (!user) return <p>Você precisa escolher um usuário primeiro.</p>;
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  async function sendMessage() {
-    if (!text.trim()) return;
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-    const response = await fetch("http://127.0.0.1:8000/messages/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user, text }),
-    });
+  function handleSend() {
+    if (!input.trim()) return;
 
-    const data: IMessage = await response.json();
+    const userMessage: IChatMessage = {
+      id: Date.now(),
+      sender: "user",
+      text: input,
+      timestamp: new Date(),
+    };
 
-    setMessages((prev) => [...prev, data]);
-    setText("");
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+
+    setTimeout(() => {
+      const botMessage: IChatMessage = {
+        id: Date.now() + 1,
+        sender: "bot",
+        text: "Recebi sua mensagem!",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    }, 600);
   }
 
   return (
-    <div className="chat-container">
-      <h2>Chat - Usuário {user}</h2>
+    <PageLayout>
+      <PageHeader title="Chat" />
 
-      <div className="chat-box">
-        {messages.map((msg) => (
-          <div key={msg.id} className="message-item">
-            <p><strong>Você:</strong> {msg.text}</p>
-            <p><strong>Bot:</strong> {msg.response}</p>
-          </div>
-        ))}
-      </div>
+      <div className="chat-container">
+        <div className="messages">
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`message ${msg.sender === "user" ? "user" : "bot"}`}
+            >
+              {msg.text}
+            </div>
+          ))}
 
-      <div className="input-area">
-        <input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Digite sua mensagem..."
-        />
-        <button onClick={sendMessage}>Enviar</button>
+          <div ref={messagesEndRef} />
+        </div>
+
+        <div className="chat-input-area">
+          <Input
+            placeholder="Digite sua mensagem..."
+            value={input}
+            fullWidth
+            onChange={(value) => setInput(value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          />
+          <Button onClick={handleSend} icon>
+            <IoSend />
+          </Button>
+        </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

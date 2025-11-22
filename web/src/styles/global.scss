@@ -1,5 +1,11 @@
 body {
   margin: 0;
-  background: #f5f7fa;
+  background: var(--color-background);
   font-family: "Inter", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
