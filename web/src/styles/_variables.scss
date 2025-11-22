@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 
 // Azul (principal)
 $blue-primary: #002855;
@@ -18,11 +18,10 @@ $gray-border: #d8dee9;
 $gray-border-light: #e3e9f2;
 
 // Neutros escuros
-$dark-background: #0f172a;  
-$dark-surface: #1e293b;      
-$dark-border: #334155;  
+$dark-background: #0f172a;
+$dark-surface: #1e293b;
+$dark-border: #334155;
 $dark-border-light: #3f4c63;
-   
 
 // Texto claro/escuro
 $light-text: #111827;
@@ -30,7 +29,6 @@ $light-text-light: #6b7280;
 
 $dark-text: #e2e8f0;
 $dark-text-light: #94a3b8;
-
 
 // Tipografia
 $font-family-base: "Inter", sans-serif;
@@ -59,9 +57,9 @@ $radius-lg: 14px;
 $radius-pill: 999px;
 
 // Sombras
-$shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.10);
+$shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.1);
 $shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
-$shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.20);
+$shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.2);
 
 // Tema Claro
 :root {
@@ -69,6 +67,9 @@ $shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.20);
   --color-primary-hover: #{$blue-primary-hover};
   --color-primary-alt: #{$blue-alt};
   --color-primary-alt-hover: #{$blue-alt-hover};
+
+  --login-gradient-start: #002855;
+  --login-gradient-end: #003b75;
 
   --color-success: #{$success};
   --color-warning: #{$warning};
@@ -93,6 +94,9 @@ $shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.20);
   --color-primary-hover: #{$blue-alt-hover};
   --color-primary-alt: #{$blue-primary};
   --color-primary-alt-hover: #{$blue-primary-hover};
+
+  --login-gradient-start: #ffffff;
+  --login-gradient-end: #e5e7eb;
 
   --color-success: #{$success};
   --color-warning: #{$warning};

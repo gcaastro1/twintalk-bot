@@ -1,0 +1,141 @@
+@use "../../../styles/variables" as *;
+
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  color: var(--color-text);
+
+  @media (min-width: 901px) {
+    transform: translateX(0);
+    position: static;
+  }
+
+  @media (max-width: 900px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    transform: translateX(-100%);
+    z-index: 9999;
+  }
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  .username {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+
+.section-title {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: -0.5rem;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  svg {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.new-chat-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.sidebar-mobile-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-4;
+
+  .sidebar-icon-btn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    width:100%;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--color-hover);
+    }
+  }
+}
+
+.sidebar-overlay {
+  display: none;
+
+  @media (max-width: 900px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
+  }
+}

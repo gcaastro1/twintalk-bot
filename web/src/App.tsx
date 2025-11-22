@@ -1,17 +1,10 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-// pages
-import Chat from "./pages/chat";
-import History from "./pages/history";
-import Login from "./pages/login";
+import { UserProvider } from "./context/UserContext";
+import { RoutesMain } from "./routes";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/historico" element={<History />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <RoutesMain />
+    </UserProvider>
   );
 }

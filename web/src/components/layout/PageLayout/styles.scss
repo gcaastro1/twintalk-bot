@@ -1,23 +1,13 @@
 @use "../../../styles/variables" as *;
 
 .page-layout {
-  display: flex;
-  justify-content: center;
-  padding: $space-10 $space-3;
-  box-sizing: border-box;
-
-  &.centered {
-    align-items: center;
-  }
-}
-
-.page-card {
-  background: var(--color-surface);
-  padding: $space-6;
-  border-radius: $radius-lg;
-  box-sizing: border-box;
-  box-shadow: $shadow-soft;
   width: 100%;
-  max-width: 700px;
-  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+
+  &.full {
+    max-width: 100%;
+    padding: 0;
+  }
 }

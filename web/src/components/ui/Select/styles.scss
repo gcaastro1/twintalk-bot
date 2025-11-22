@@ -1,0 +1,66 @@
+@use "../../../styles/variables" as *;
+
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2; 
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.select-label {
+  font-size: $font-size-sm;
+  color: var(--color-text); 
+  font-weight: 500;
+}
+
+.select {
+  width: 100%;
+  padding: $space-3 $space-4; 
+  padding-right: 40px; 
+  border-radius: $radius-md;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: $font-size-md;
+  font-family: $font-family-base;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+
+  &.placeholder {
+    color: var(--color-text-light);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary-alt);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 40, 85, 0.25); 
+  }
+
+  &:disabled {
+    background-color: var(--color-border-light);
+    cursor: not-allowed;
+  }
+
+  option {
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: 10px;
+  }
+}

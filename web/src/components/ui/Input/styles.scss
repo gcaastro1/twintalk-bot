@@ -19,7 +19,6 @@
 .input {
   width: 100%;
   box-sizing: border-box;
-
   padding: $space-3 $space-4;
   border-radius: $radius-md;
   border: 1px solid var(--color-border);
@@ -27,7 +26,7 @@
   font-family: $font-family-base;
   color: var(--color-text);
   background: var(--color-surface);
-  transition: 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &::placeholder {
     color: var(--color-text-light);
@@ -50,7 +49,22 @@
   }
 }
 
-// Erro
+.input--textarea {
+  resize: none;
+  overflow: hidden; // Esconde scrollbar (a altura ajusta via JS)
+  min-height: 44px; // Mesma altura do input normal
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.5;
+  display: block;
+
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .input--error {
   border-color: var(--color-error) !important;
   color: var(--color-error);

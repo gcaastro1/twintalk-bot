@@ -1,0 +1,91 @@
+// src/pages/history/styles.scss
+@use "../../styles/variables" as *;
+
+.history-layout {
+  display: flex;
+  height: 100vh;
+  background-color: var(--color-background);
+}
+
+.history-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.history-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto; // Scroll apenas no conteúdo
+
+  .history-header {
+    margin-bottom: 2rem;
+    h2 {
+      font-size: 1.8rem;
+      color: var(--color-text);
+    }
+    p {
+      color: var(--color-text);
+    }
+  }
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+// Estilização específica do Card de Histórico
+.history-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .badge {
+    background-color: var(--color-primary-light, #e0f2fe);
+    color: var(--color-primary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &.bot {
+      background-color: var(--color-surface-hover, #f3f4f6);
+      color: var(--color-text);
+    }
+  }
+
+  .question-text {
+    font-weight: 500;
+    color: var(--color-text);
+    font-style: italic;
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--color-border, #eee);
+    margin: 0.5rem 0;
+  }
+
+  .response-text {
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 4rem;
+  opacity: 0.5;
+}

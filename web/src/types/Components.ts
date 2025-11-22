@@ -5,12 +5,14 @@ export type TButtonSize = "sm" | "md" | "lg";
 export type TInputType = "text" | "email" | "password" | "number";
 
 export interface IButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: TButtonVariant;
   size?: TButtonSize;
   disabled?: boolean;
+  loading?: boolean;
+  className?: string;
   onClick?: () => void;
-  type?: "button" | "submit";
+  type?: "button" | "submit" | "reset";
   fullWidth?: boolean;
   icon?: boolean;
 }
@@ -23,18 +25,35 @@ export interface IInputProps {
   error?: string;
   disabled?: boolean;
   fullWidth?: boolean;
+  multiline?: boolean;
   onChange: (value: string) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export interface IPageLayoutProps {
-  children: ReactNode;
-  centered?: boolean; 
+export interface ISelectOption {
+  label: string;
+  value: string;
 }
 
-export interface IPageHeaderProps {
+export interface ISelectProps {
+  label?: string;
+  value: string | "";
+  disabled?: boolean;
+  options: ISelectOption[];
+  onChange: (value: string) => void;
+}
+
+export interface IPageLayoutProps {
+  children: ReactNode;
+  centered?: boolean;
+  full?: boolean;
+}
+
+export interface ITopbarProps {
   title: string;
   showBack?: boolean;
+  fixed?: boolean;
+  onMenuClick?: () => void;
 }
 
 export interface IBrandProps {

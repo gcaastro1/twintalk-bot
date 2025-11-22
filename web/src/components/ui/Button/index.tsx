@@ -1,6 +1,5 @@
-// Types
+// src/components/ui/Button/index.tsx
 import type { IButtonProps } from "../../../types/Components";
-// Styles
 import "./styles.scss";
 
 export default function Button({
@@ -8,6 +7,8 @@ export default function Button({
   variant = "primary",
   size = "md",
   disabled = false,
+  loading = false,
+  className = "",
   onClick,
   type = "button",
   fullWidth = false,
@@ -16,7 +17,7 @@ export default function Button({
   return (
     <button
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       className={`
         btn
@@ -24,9 +25,11 @@ export default function Button({
         btn--${size}
         ${fullWidth ? "btn--full" : ""}
         ${icon ? "btn--icon" : ""}
+        ${loading ? "btn--loading" : ""}
+        ${className} 
       `}
     >
-      {children}
+      {loading ? <span className="loader"></span> : children}
     </button>
   );
 }

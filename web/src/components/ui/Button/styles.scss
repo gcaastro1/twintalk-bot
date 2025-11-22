@@ -1,97 +1,135 @@
+// src/components/ui/Button/styles.scss
 @use "../../../styles/variables" as *;
 
 .btn {
   border: none;
   cursor: pointer;
   font-family: $font-family-base;
-  font-weight: 600;
+  font-weight: 500; // Um pouco mais de peso fica melhor em botões
   border-radius: $radius-md;
-  transition: all 0.2s ease;
-  display: inline-block;
-  text-align: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); // Animação mais suave
+  display: inline-flex; // Melhor para alinhar ícones e texto
+  align-items: center;
+  justify-content: center;
+  gap: $space-2; // Espaço entre ícone e texto se houver ambos
+  position: relative;
+  overflow: hidden;
+
+  // Foco para acessibilidade (Navegação por teclado)
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 
   &--full {
     width: 100%;
-    display: block;
+    display: flex;
   }
 
   &--sm {
     padding: $space-2 $space-3;
     font-size: $font-size-sm;
+    height: 32px;
   }
 
   &--md {
     padding: $space-3 $space-4;
     font-size: $font-size-md;
+    height: 44px; // Altura fixa ajuda no alinhamento
   }
 
   &--lg {
-    padding: $space-4 $space-5;
+    padding: $space-4 $space-6;
     font-size: $font-size-lg;
+    height: 56px;
   }
 
   &--icon {
     padding: 0;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // O tamanho do botão ícone agora acompanha o size
+    &.btn--sm { width: 32px; }
+    &.btn--md { width: 44px; }
+    &.btn--lg { width: 56px; }
 
     svg {
-      font-size: 20px;
-      color: #fff;
-    }
-
-    &.outline svg {
-      color: var(--color-primary);
+      font-size: 1.2em; // Escala com a fonte
     }
   }
+
+  // --- Variantes ---
 
   // Primary
   &--primary {
     background: var(--color-primary);
     color: #ffffff;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--color-primary-hover);
+      transform: translateY(-1px); // Sutil elevação
+      box-shadow: var(--shadow-soft);
     }
 
-    &:active {
-      opacity: 0.9;
+    &:active:not(:disabled) {
+      transform: translateY(0) scale(0.98); // Efeito de clique tátil
     }
   }
 
-  // Primary alt
+  // Primary Alt (Para usar no tema escuro ou destaque secundário)
   &--primary-alt {
     background: var(--color-primary-alt);
     color: #ffffff;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--color-primary-alt-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
     }
 
-    &:active {
-      opacity: 0.9;
+    &:active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
     }
   }
+
   // Outline
   &--outline {
     background: transparent;
-    border: 2px solid var(--color-primary);
+    border: 1px solid var(--color-primary); // 1px é mais elegante que 2px geralmente
     color: var(--color-primary);
 
-    &:hover {
-      background: var(--color-primary);
+    &:hover:not(:disabled) {
+      background: var(--color-primary); // Alpha baixo
       color: var(--color-surface);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
     }
   }
 
   // Disabled
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    background-color: var(--color-border); // Cinza neutro para disabled
+    color: var(--color-text-light);
+    pointer-events: none; // Impede hover
+    border-color: transparent;
+  }
+
+  // --- Loading Spinner (CSS Puro) ---
+  .loader {
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }

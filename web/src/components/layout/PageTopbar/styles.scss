@@ -1,0 +1,48 @@
+@use "../../../styles/variables" as *;
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.8rem 1.5rem;
+  color: var(--color-text);
+  height: 70px;
+
+  .mobile-menu-btn {
+    display: none; 
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0.5rem 1rem;
+
+    .mobile-menu-btn {
+      display: block; 
+      margin-right: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      margin-left: 0.5rem;
+    }
+  }
+}

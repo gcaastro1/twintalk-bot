@@ -1,1 +1,1 @@
-export type TUser = "A" | "B" | null;
+export type TUser = "" | "A" | "B" | null;
