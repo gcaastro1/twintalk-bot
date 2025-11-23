@@ -106,6 +106,8 @@ ___
 
   - **CSS Modules/SCSS:** A estilização foi feita manualmente com SCSS para demonstrar conhecimento em CSS puro, arquitetura BEM e responsividade, sem depender de bibliotecas de componentes pesadas.
 
+  - **Hooks:**: Adotei Custom Hooks para retirar a complexidade lógica de dentro das páginas <`(pages/chat, pages/history)`>. Isso resultou em componentes mais "limpos" e declarativos, onde a origem dos dados é transparente para a interface, facilitando a leitura e manutenção do código a longo prazo.
+
 - **Lógica do Backend**
   - **Modelagem:** A estrutura foi mantida simples com um modelo Message vinculado diretamente ao User (String), focando na entrega ágil do MVP solicitado e na performance de leitura.
 
