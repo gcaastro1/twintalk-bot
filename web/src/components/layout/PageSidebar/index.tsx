@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
-import { FiUser } from "react-icons/fi";
-import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
+import { FiClock, FiMessageSquare, FiUser } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 import { useUser } from "../../../context/UserContext";
 import "./styles.scss";
 
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onNewChat?: () => void;
+  disabled?: boolean;
+}
+
 export default function Sidebar({
   isOpen,
   onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+}: SidebarProps) {
   const { user } = useUser();
   const [isMobile, setIsMobile] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,6 +36,11 @@ export default function Sidebar({
     return () => window.removeEventListener("resize", handleResize);
   }, [onClose]);
 
+  function handleNavigate(path: string) {
+    navigate(path);
+    if (isMobile) onClose();
+  }
+
   return (
     <>
       <aside className={`sidebar ${isMobile && isOpen ? "open" : ""}`}>
@@ -38,25 +49,23 @@ export default function Sidebar({
             <FiUser />
           </div>
           <span className="username">
-            {user ? `Usuário ${user || user}` : "Visitante"}
+            {user ? `Usuário ${user}` : "Visitante"}
           </span>
         </div>
 
-        <h3 className="section-title">Conversas</h3>
+        <h3 className="section-title">Menu</h3>
 
         <div className="chat-list">
-          <div className="chat-item">
-            <HiOutlineChatBubbleLeftRight />
-            <span>Dúvidas sobre Planos</span>
+          <div className="chat-item" onClick={() => handleNavigate("/chat")}>
+            <FiMessageSquare />
+            <span>Chat</span>
           </div>
 
-          <div className="chat-item">
-            <HiOutlineChatBubbleLeftRight />
-            <span>Suporte Técnico</span>
+          <div className="chat-item" onClick={() => handleNavigate("/history")}>
+            <FiClock />
+            <span>Histórico</span>
           </div>
         </div>
-
-        <button className="new-chat-btn">Nova Conversa</button>
       </aside>
 
       {isMobile && isOpen && (

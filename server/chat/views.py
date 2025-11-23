@@ -1,48 +1,26 @@
-from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework import status
-
 from .models import Message
 from .serializers import MessageSerializer
+import time 
 
+class MessageViewSet(viewsets.ModelViewSet):
+    serializer_class = MessageSerializer
 
-class MessageView(APIView):
+    def get_queryset(self):
+        
+        user_id = self.request.query_params.get('user')
+        if user_id:
+            return Message.objects.filter(user=user_id).order_by('created_at')
+        return Message.objects.all()
 
-    def get(self, request):
-        user = request.query_params.get('user')
+    def perform_create(self, serializer):
+        user_input = self.request.data.get('text', '')
+        user_id = self.request.data.get('user', 'A')
 
-        if user not in ['A', 'B']:
-            return Response(
-                {"error": "Parâmetro 'user' deve ser A ou B"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        if user_id == 'A':
+            mock_response = "Obrigado por seu contato, Usuário A. Em breve responderemos."
+        else:
+            mock_response = "Olá Usuário B! Recebemos sua mensagem e já estamos analisando."
 
-        messages = Message.objects.filter(user=user).order_by('created_at')
-        serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        user = request.data.get('user')
-        text = request.data.get('text')
-
-        if not user or not text:
-            return Response(
-                {"error": "Campos 'user' e 'text' são obrigatórios."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        mock_responses = {
-            'A': "Obrigado por sua mensagem, Usuário A. Em breve retornaremos.",
-            'B': "Mensagem recebida, Usuário B! Aguarde nosso retorno.",
-        }
-
-        response_text = mock_responses.get(user, "Obrigado pelo contato.")
-
-        message = Message.objects.create(
-            user=user,
-            text=text,
-            response=response_text
-        )
-
-        serializer = MessageSerializer(message)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer.save(response=mock_response)

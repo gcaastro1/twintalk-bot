@@ -1,4 +1,3 @@
-// src/pages/history/styles.scss
 @use "../../styles/variables" as *;
 
 .history-layout {
@@ -17,43 +16,67 @@
 .history-content {
   flex: 1;
   padding: 2rem;
-  overflow-y: auto; // Scroll apenas no conteúdo
+  overflow-y: auto;
 
   .history-header {
     margin-bottom: 2rem;
-    h2 {
-      font-size: 1.8rem;
-      color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
     }
-    p {
-      color: var(--color-text);
+
+    .header-title {
+      h2 {
+        font-size: 1.8rem;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: var(--color-text-light);
+      }
+    }
+
+    .search-container {
+      width: 100%;
+      max-width: 400px; 
     }
   }
 }
 
-.history-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+.loading-text {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--color-text-light);
 }
 
-// Estilização específica do Card de Histórico
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
 .history-card {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-
+  
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 0.85rem;
-    color: var(--color-text-secondary);
+    color: var(--color-text-light);
   }
 
   .badge {
-    background-color: var(--color-primary-light, #e0f2fe);
-    color: var(--color-primary);
+    background-color: var(--color-primary-alt);
+    color: #fff;
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -61,8 +84,8 @@
     text-transform: uppercase;
 
     &.bot {
-      background-color: var(--color-surface-hover, #f3f4f6);
-      color: var(--color-text);
+        background-color: var(--color-border);
+        color: var(--color-text);
     }
   }
 
@@ -74,18 +97,19 @@
 
   .divider {
     height: 1px;
-    background-color: var(--color-border, #eee);
-    margin: 0.5rem 0;
+    background-color: var(--color-border);
+    margin: 0.2rem 0;
   }
 
   .response-text {
     color: var(--color-text);
-    line-height: 1.4;
+    line-height: 1.5;
   }
 }
 
 .empty-state {
-  text-align: center;
-  margin-top: 4rem;
-  opacity: 0.5;
+    text-align: center;
+    margin-top: 4rem;
+    color: var(--color-text-light);
+    font-size: 1.1rem;
 }

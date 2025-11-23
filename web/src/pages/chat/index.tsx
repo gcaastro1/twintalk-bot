@@ -1,22 +1,21 @@
-// src/pages/chat/index.tsx
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "../../components/layout/PageSidebar";
 import Topbar from "../../components/layout/PageTopbar";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
 import { useUser } from "../../context/UserContext";
-import type { IChatMessage } from "../../types/Message";
+import type { IChatMessage, IStoredMessage } from "../../types/Message";
 import "./styles.scss";
 
 export default function ChatPage() {
   const { user } = useUser();
-
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -26,50 +25,108 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    async function loadPreviousChat() {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/messages/?user=${user}`
+        );
+        if (!response.ok) return;
+
+        const data: IStoredMessage[] = await response.json();
+
+        const restoredMessages: IChatMessage[] = [];
+
+        data.forEach((item) => {
+          restoredMessages.push({
+            id: item.id,
+            text: item.text,
+            sender: "user",
+            timestamp: new Date(item.created_at),
+          });
+
+          restoredMessages.push({
+            id: item.id + 0.1,
+            text: item.response,
+            sender: "bot",
+            timestamp: new Date(item.created_at),
+          });
+        });
+
+        setMessages(restoredMessages);
+      } catch (error) {
+        console.error("Erro ao restaurar chat", error);
+      }
+    }
+
+    loadPreviousChat();
+  }, [user]);
+
+  function clearChat() {
+    setMessages([]);
+    setSidebarOpen(false);
+  }
+
   async function handleSend() {
     if (!input.trim() || !user) return;
 
     const userText = input;
     setInput("");
+    setIsLoading(true);
 
-    const userMessage: IChatMessage = {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 10);
+
+    const tempUserMsg: IChatMessage = {
       id: Date.now(),
       text: userText,
       sender: "user",
       timestamp: new Date(),
     };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setIsLoading(true);
+    setMessages((prev) => [...prev, tempUserMsg]);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      const mockResponse =
-        user === "A"
-          ? "Olá Usuário A! Recebemos sua mensagem. Nossa equipe de suporte nível A responderá em breve."
-          : "Oi Usuário B! Tudo bem? Um especialista nível B já vai te atender.";
+      const response = await fetch("http://127.0.0.1:8000/messages/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: userText, user: user }),
+      });
+
+      if (!response.ok) throw new Error("Erro na API");
+
+      const data = await response.json();
 
       const botMessage: IChatMessage = {
-        id: Date.now() + 1,
-        text: mockResponse,
+        id: data.id,
+        text: data.response,
         sender: "bot",
-        timestamp: new Date(),
+        timestamp: new Date(data.created_at),
       };
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error("Erro ao enviar mensagem", error);
+      console.error("Erro ao enviar", error);
     } finally {
       setIsLoading(false);
+      setTimeout(() => inputRef.current?.focus(), 10);
     }
   }
 
   return (
     <div className="chat-layout">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onNewChat={clearChat}
+        disabled={isLoading}
+      />
+
       <main className="chat-main">
         <Topbar
-          title={`Chat - ${user || "Visitante"}`}
+          title={`Chat de ${user || "Visitante"}`}
           onMenuClick={() => setSidebarOpen(true)}
         />
 
@@ -77,7 +134,7 @@ export default function ChatPage() {
           {messages.length === 0 ? (
             <div className="chat-empty">
               <h3>Olá, {user}</h3>
-              <p>Digite algo para iniciar o atendimento simulado.</p>
+              <p>O seu histórico foi carregado. Continue a conversa!</p>
             </div>
           ) : (
             <div className="messages">
@@ -113,6 +170,7 @@ export default function ChatPage() {
 
         <div className="chat-input-area">
           <Input
+            ref={inputRef}
             placeholder="Digite sua mensagem..."
             value={input}
             fullWidth
@@ -126,6 +184,7 @@ export default function ChatPage() {
             icon
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
+            loading={isLoading}
           >
             <span style={{ fontSize: "1.2rem" }}>➤</span>
           </Button>

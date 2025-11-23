@@ -1,21 +1,19 @@
-// src/components/ui/Button/styles.scss
 @use "../../../styles/variables" as *;
 
 .btn {
   border: none;
   cursor: pointer;
   font-family: $font-family-base;
-  font-weight: 500; // Um pouco mais de peso fica melhor em botões
+  font-weight: 500; 
   border-radius: $radius-md;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); // Animação mais suave
-  display: inline-flex; // Melhor para alinhar ícones e texto
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+  display: inline-flex; 
   align-items: center;
   justify-content: center;
-  gap: $space-2; // Espaço entre ícone e texto se houver ambos
+  gap: $space-2;
   position: relative;
   overflow: hidden;
 
-  // Foco para acessibilidade (Navegação por teclado)
   &:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -35,7 +33,7 @@
   &--md {
     padding: $space-3 $space-4;
     font-size: $font-size-md;
-    height: 44px; // Altura fixa ajuda no alinhamento
+    height: 44px; 
   }
 
   &--lg {
@@ -46,35 +44,30 @@
 
   &--icon {
     padding: 0;
-    // O tamanho do botão ícone agora acompanha o size
     &.btn--sm { width: 32px; }
     &.btn--md { width: 44px; }
     &.btn--lg { width: 56px; }
 
     svg {
-      font-size: 1.2em; // Escala com a fonte
+      font-size: 1.2em;
     }
   }
 
-  // --- Variantes ---
-
-  // Primary
   &--primary {
     background: var(--color-primary);
     color: #ffffff;
 
     &:hover:not(:disabled) {
       background: var(--color-primary-hover);
-      transform: translateY(-1px); // Sutil elevação
+      transform: translateY(-1px); 
       box-shadow: var(--shadow-soft);
     }
 
     &:active:not(:disabled) {
-      transform: translateY(0) scale(0.98); // Efeito de clique tátil
+      transform: translateY(0) scale(0.98); 
     }
   }
 
-  // Primary Alt (Para usar no tema escuro ou destaque secundário)
   &--primary-alt {
     background: var(--color-primary-alt);
     color: #ffffff;
@@ -89,15 +82,13 @@
       transform: translateY(0) scale(0.98);
     }
   }
-
-  // Outline
   &--outline {
     background: transparent;
-    border: 1px solid var(--color-primary); // 1px é mais elegante que 2px geralmente
+    border: 1px solid var(--color-primary); 
     color: var(--color-primary);
 
     &:hover:not(:disabled) {
-      background: var(--color-primary); // Alpha baixo
+      background: var(--color-primary);
       color: var(--color-surface);
     }
 
@@ -106,17 +97,15 @@
     }
   }
 
-  // Disabled
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: var(--color-border); // Cinza neutro para disabled
+    background-color: var(--color-border);
     color: var(--color-text-light);
-    pointer-events: none; // Impede hover
+    pointer-events: none;
     border-color: transparent;
   }
 
-  // --- Loading Spinner (CSS Puro) ---
   .loader {
     width: 1em;
     height: 1em;

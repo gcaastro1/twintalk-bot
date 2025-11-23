@@ -51,8 +51,8 @@
 
 .input--textarea {
   resize: none;
-  overflow: hidden; // Esconde scrollbar (a altura ajusta via JS)
-  min-height: 44px; // Mesma altura do input normal
+  overflow: hidden; 
+  min-height: 44px; 
   max-height: 200px;
   overflow-y: auto;
   line-height: 1.5;

@@ -1,4 +1,3 @@
-// src/components/ui/Button/index.tsx
 import type { IButtonProps } from "../../../types/Components";
 import "./styles.scss";
 
