@@ -46,8 +46,6 @@ export function useChat() {
 
     try {
       const data = await chatService.sendMessage(text, user);
-
-      // Adiciona resposta do bot
       setMessages((prev) => [
         ...prev,
         {
