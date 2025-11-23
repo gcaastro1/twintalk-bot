@@ -1,53 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageSidebar from "../../components/layout/PageSidebar";
 import PageTopbar from "../../components/layout/PageTopbar";
 import Card from "../../components/ui/Card";
 import Input from "../../components/ui/Input";
 import { useUser } from "../../context/UserContext";
-import type { IStoredMessage } from "../../types/Message";
+import { useHistory } from "../../hooks/useHistory";
 import "./styles.scss";
 
 export default function History() {
   const { user } = useUser();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [messages, setMessages] = useState<IStoredMessage[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  const [search, setSearch] = useState("");
+  const { messages, loading, searchTerm, setSearchTerm } = useHistory();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-      return;
-    }
-
-    async function loadHistory() {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:8000/messages/?user=${user}`
-        );
-        if (!response.ok) throw new Error("Erro ao carregar histórico");
-        const data = await response.json();
-        setMessages(data.reverse());
-      } catch (error) {
-        console.error("Erro:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadHistory();
-  }, [user, navigate]);
-
-  const filteredMessages = messages.filter((msg) => {
-    const term = search.toLowerCase();
-    const inText = msg.text.toLowerCase().includes(term);
-    const inResponse = msg.response.toLowerCase().includes(term);
-    return inText || inResponse;
-  });
+  if (!user) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <div className="history-layout">
@@ -67,44 +38,29 @@ export default function History() {
             </div>
             <div className="search-container">
               <Input
-                placeholder="Pesquisar nas mensagens..."
-                value={search}
-                onChange={setSearch}
+                placeholder="Pesquisar..."
+                value={searchTerm}
+                onChange={setSearchTerm}
                 fullWidth
               />
             </div>
           </header>
 
           {loading ? (
-            <p className="loading-text">Carregando histórico...</p>
-          ) : filteredMessages.length === 0 ? (
-            <div className="empty-state">
-              {search
-                ? `Nenhum resultado encontrado para "${search}"`
-                : "Nenhuma conversa encontrada."}
-            </div>
+            <p className="loading-text">Carregando...</p>
           ) : (
             <div className="history-grid">
-              {filteredMessages.map((msg) => (
+              {messages.map((msg) => (
                 <Card key={msg.id} className="history-card">
                   <div className="card-header">
                     <span className="badge">Pergunta</span>
                     <span className="date">
-                      {new Date(msg.created_at).toLocaleDateString()} às{" "}
-                      {new Date(msg.created_at).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(msg.created_at).toLocaleDateString()}
                     </span>
                   </div>
                   <p className="question-text">"{msg.text}"</p>
-
                   <div className="divider"></div>
-
-                  <div className="card-response">
-                    <span className="badge bot">Resposta</span>
-                    <p className="response-text">{msg.response}</p>
-                  </div>
+                  <p className="response-text">{msg.response}</p>
                 </Card>
               ))}
             </div>
